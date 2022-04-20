@@ -1,0 +1,27 @@
+.App {
+  text-align: center;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 2vh;
+  max-height: 100px;
+  height: 100px;
+  background: linear-gradient(
+    90deg,
+    rgba(9, 9, 121, 1) 45%,
+    rgba(57, 27, 185, 0.9722863741339491) 100%
+  );
+  color: white;
+}
+
+.nav-links {
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  text-decoration: none;
+}
