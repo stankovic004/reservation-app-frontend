@@ -8,11 +8,12 @@ import Popup from "../Components/Popup";
 function Home() {
 
   const [popupShown, setPopupShown] = useState(false)
-
+ 
   let showPopup = () => {
     console.log("hello world");
     setPopupShown(true);
   }
+
 
   return (
     <div>
