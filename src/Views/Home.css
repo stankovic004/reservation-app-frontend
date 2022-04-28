@@ -82,25 +82,60 @@
   height: 100px;
   margin-top: 5vh;
 
-  background-color: rgb(195, 195, 199);
 
   display: grid;
   grid-template-columns: repeat(16, minmax(70px, 1fr));
+  grid-gap: 3px;
+
   /* flex-direction: row;
   justify-content: space-evenly;
   padding-top: auto; */
 
 }
 
-.hourClickable{
+.hourAvailable{
   height: 80%;
 
-  background-color: #088;
+  color: white;
+  background-color: rgb(51, 75, 214);
   border-radius: 2%;
 
   align-items: center;
   font-size:large;
   display: flex;
   justify-content: center;
-  
+}
+
+.hourClicked{
+  height: 80%;
+
+  color: black;
+  background-color: rgb(40, 228, 50);
+  border-radius: 2%;
+
+  align-items: center;
+  font-size:large;
+  display: flex;
+  justify-content: center;
+}
+
+.hourTaken{
+  height: 80%;
+
+  color: black;
+  background-color: rgb(189, 12, 12);
+  border-radius: 2%;
+
+  align-items: center;
+  font-size:large;
+  display: flex;
+  justify-content: center;
+}
+
+.info{ 
+  padding-right: 800px;
+  float: left;
+  align-items: left;
+  align-content: left;
+
 }

@@ -1,0 +1,38 @@
+{
+    "schedules": [
+        {
+            "date": "25/12/2022",
+            "schedule": [
+                {"hours": 7, "min": 0, "reserved": false},
+                {"hours": 7, "min": 30, "reserved": false},
+                {"hours": 8, "min": 0, "reserved": false},
+                {"hours": 8, "min": 30, "reserved": false},
+                {"hours": 9, "min": 0, "reserved": false},
+                {"hours": 9, "min": 30, "reserved": false},
+                {"hours": 10, "min": 0, "reserved": false},
+                {"hours": 10, "min": 30, "reserved": false},
+                {"hours": 11, "min": 0, "reserved": false},
+                {"hours": 11, "min": 30, "reserved": false},
+                {"hours": 12, "min": 0, "reserved": false},
+                {"hours": 12, "min": 30, "reserved": false}
+            ]
+        },
+        {
+            "date": "25/12/2022",
+            "schedule": [
+                {"hours": 7, "min": 0, "reserved": false},
+                {"hours": 7, "min": 30, "reserved": false},
+                {"hours": 8, "min": 0, "reserved": false},
+                {"hours": 8, "min": 30, "reserved": false},
+                {"hours": 9, "min": 0, "reserved": false},
+                {"hours": 9, "min": 30, "reserved": false},
+                {"hours": 10, "min": 0, "reserved": false},
+                {"hours": 10, "min": 30, "reserved": false},
+                {"hours": 11, "min": 0, "reserved": false},
+                {"hours": 11, "min": 30, "reserved": false},
+                {"hours": 12, "min": 0, "reserved": false},
+                {"hours": 12, "min": 30, "reserved": false}
+            ]
+        }
+    ]
+}
