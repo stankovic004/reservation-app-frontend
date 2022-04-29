@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 function MyMap(props) {
   const map = useRef();
-  const pos = window.ol.proj.fromLonLat([props.lon, props.lat]);
+  // const pos = window.ol.proj.fromLonLat([props.lon, props.lat]);
   
 
   useEffect(() => {

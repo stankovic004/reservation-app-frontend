@@ -4,23 +4,32 @@ import 'react-calendar/dist/Calendar.css';
 
 function Popup(props) {
 
-    const [hours, setHours] = useState([])
+    const [schedules, setSchedules] = useState([])
     const [isActive, setActive] = useState("false");
 
     const [date, setDate] = useState(new Date());
 
     useEffect(()=> {
-        let hours = [];
+        let schedules = [];
         for (let i = 7; i < 23; i+=0.5 ) {
-          hours.push({hours: Math.floor(i), min: i % 1 == 0 ? '00' : '30', reserved: false, clicked:false})
+          schedules.push({
+              hours: Math.floor(i), 
+              min: i % 1 === 0 ? '00' : '30', 
+              reserved: false, 
+              clicked:false
+            })
         }
-        setHours(hours);
+        setSchedules(schedules);
     }, [])
 
-    let handleClick= (hours,minutes, e) =>{
+    let handleClick= (hoursClicked,minutes, e) =>{
         // whichClass.stopPropagation();
-        console.log("pressed " + hours + ":" + minutes+ "  class:" + e.className);
-
+        console.log("pressed " + hoursClicked + ":" + minutes);
+        for(let i = 0; i < schedules.length; i++) {
+            if (schedules[i].hours === hoursClicked && schedules[i].min === minutes) {
+                schedules[i].clicked = !schedules[i].clicked;
+            }
+        }
     }
     
     let closePopup = () => {
@@ -47,6 +56,9 @@ function Popup(props) {
         setDate(newDate);
     }
 
+    const potvrdi = () => {
+
+    }
     
 
     return (
@@ -54,10 +66,10 @@ function Popup(props) {
             <div className="innerPopup" onClick={dontClose}>
                     <div className="innerPopupContainer">
                         <div className="calendarContainer">
-                            <Calendar  onChange={onDateChange} value={date} next2Label='' prev2Label={''} />
+                            <Calendar  onChange={onDateChange} value={date} next2Label='' prev2Label={''}/>
                         </div>
                         <div className="hourContainer">
-                            { hours.map(h => {
+                            { schedules.map(h => {
                                 return (<button className={ h.reserved ? 'hourTaken' :  h.clicked ? 'hourClicked' : 'hourAvailable ' } onClick={() => {handleClick(h.hours, h.min, h); handleToggle()}}>{h.hours}:{h.min}</button>)
                             })}
                         </div>
@@ -67,7 +79,7 @@ function Popup(props) {
                             <p>Dvorana: *goc* </p>
                             <p>Datum:  {date.toDateString()}</p> 
                             <p>Sati:  *poklikani divi*</p>
-                            <button> Potvrdi</button>
+                            <button onClick={potvrdi}> Potvrdi</button>
                         </div>
 
                     </div>
