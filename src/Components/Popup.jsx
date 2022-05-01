@@ -6,7 +6,7 @@ function Popup(props) {
 
     const [schedules, setSchedules] = useState([])
     const [isActive, setActive] = useState("false");
-
+    const [schedulesTaken, setSchedulesTaken] = useState([])
     const [date, setDate] = useState(new Date());
 
     useEffect(()=> {
@@ -16,7 +16,7 @@ function Popup(props) {
               hours: Math.floor(i), 
               min: i % 1 === 0 ? '00' : '30', 
               reserved: false, 
-              clicked:false
+              isClicked:false
             })
         }
         setSchedules(schedules);
@@ -27,9 +27,19 @@ function Popup(props) {
         console.log("pressed " + hoursClicked + ":" + minutes);
         for(let i = 0; i < schedules.length; i++) {
             if (schedules[i].hours === hoursClicked && schedules[i].min === minutes) {
-                schedules[i].clicked = !schedules[i].clicked;
+                schedules[i].isClicked = !schedules[i].isClicked;
             }
         }
+        //dodavanje u dolji info dio
+        let schedulesTaken = [];
+
+        for(let i = 0; i < schedules.length; i++) {
+            if (schedules[i].isClicked) {
+               schedulesTaken.push(schedules[i]); 
+               console.log('hmm');
+            }
+        }
+        setSchedulesTaken(schedulesTaken);
     }
     
     let closePopup = () => {
@@ -56,8 +66,9 @@ function Popup(props) {
         setDate(newDate);
     }
 
-    const potvrdi = () => {
-
+  
+    const handleSubmit = () => {
+        //Reservation(username, date, schedulesTaken, location);
     }
     
 
@@ -70,7 +81,7 @@ function Popup(props) {
                         </div>
                         <div className="hourContainer">
                             { schedules.map(h => {
-                                return (<button className={ h.reserved ? 'hourTaken' :  h.clicked ? 'hourClicked' : 'hourAvailable ' } onClick={() => {handleClick(h.hours, h.min, h); handleToggle()}}>{h.hours}:{h.min}</button>)
+                                return (<button className={ h.reserved ? 'hourTaken' :  h.isClicked ? 'hourClicked' : 'hourAvailable ' } onClick={() => {handleClick(h.hours, h.min, h); handleToggle()}}>{h.hours}:{h.min}</button>)
                             })}
                         </div>
                         <div className="info">
@@ -78,8 +89,12 @@ function Popup(props) {
                             <p>Rezervirao: *korisnicko ime* </p>
                             <p>Dvorana: *goc* </p>
                             <p>Datum:  {date.toDateString()}</p> 
-                            <p>Sati:  *poklikani divi*</p>
-                            <button onClick={potvrdi}> Potvrdi</button>
+                            <p>Sati: ⠀ 
+                                { schedulesTaken.map(schedule =>{
+                                    return((schedule.isClicked ? schedule.hours+':'+schedule.min  : '') + ', ')
+                                })}
+                                </p>
+                            <button onClick={handleSubmit}> Potvrdi</button>
                         </div>
 
                     </div>

@@ -19,7 +19,7 @@ function Home() {
     <div>
 
       <div class="home">
-        <h1>Home</h1>
+        <h1><br></br></h1>
       </div>
 
       <div class="mapContainer">

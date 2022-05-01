@@ -17,13 +17,6 @@ export default function Login() {
     UserLogin(email,password);
   }
 
-  // const formGroupLeftFloater = {
-  //   display: "flex",
-  //   justifyContent: "spaceBetween",
-  //   // backgroundColor: "red",
-  //   float: "left",
-  // };
-
   return (
     <div className="whole">
       <div className="LoginContainer">

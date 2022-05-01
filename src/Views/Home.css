@@ -135,7 +135,7 @@
 .info{ 
   padding-right: 800px;
   float: left;
-  align-items: left;
-  align-content: left;
+  text-align: left;
+  font-size: large;
 
 }
