@@ -1,25 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
+import { GetLocations } from "../services/locations";
 // import {fromLonLat, toLonLat} from 'ol/proj';
 
+const ol = window.ol;
 function MyMap(props) {
-  const map = useRef();
+  const [olMap, setOlMap] = useState();
+  const [locations, setLocations] = useState([]);
   // const pos = window.ol.proj.fromLonLat([props.lon, props.lat]);
-  
 
-  useEffect(() => {
-    const marker = new window.ol.Overlay({
-      position: window.ol.proj.fromLonLat([props.lon, props.lat]),
-      positioning: 'center-center',
-      element: document.getElementById('marker'),
-      stopEvent: true,
-    });
-
-    const popup = new window.ol.Overlay({
-      element: document.getElementById('popup'),
-    });
-    
-    let olMap = new window.ol.Map({
-      target: map.current,
+  function initMap() {
+    console.log("ovo je izvrseno");
+    let map = new window.ol.Map({
+      target: "map",
       layers: [
         new window.ol.layer.Tile({ source: new window.ol.source.OSM() }),
       ],
@@ -28,16 +20,73 @@ function MyMap(props) {
         zoom: props.zoom || 6,
       }),
     });
-    olMap.addOverlay(popup);
-    olMap.addOverlay(marker);
-  }, [props.lat, props.lon, props.zoom]);
+    map.on("click", function (e) {
+      map.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
+        console.log(feature);
+        props.setLocationSelected({
+          id: feature.values_.id,
+          name: feature.values_.name,
+        });
+        props.showPopupFunc();
+      });
+    });
+    setOlMap(map);
+  }
 
+  function getFeatures() {
+    var features = [];
+    for (var i = 0; i < locations.length; i++) {
+      var iconFeature = new ol.Feature({
+        geometry: new ol.geom.Point(
+          ol.proj.transform(
+            [locations[i].lon, locations[i].lat],
+            "EPSG:4326",
+            "EPSG:3857"
+          )
+        ),
+        name: locations[i].name,
+        id: locations[i].id,
+      });
+
+      var iconStyle = new ol.style.Style({
+        image: new ol.style.Icon({
+          anchor: [0.5, 1],
+          src: "http://cdn.mapmarker.io/api/v1/pin?text=P&size=50&hoffset=1",
+        }),
+      });
+
+      iconFeature.setStyle(iconStyle);
+      features.push(iconFeature);
+    }
+    console.log(features);
+    return features;
+  }
+
+  useEffect(() => {
+    initMap();
+    GetLocations().then((loc) => {
+      setLocations(loc);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!olMap) {
+      return;
+    }
+    let features = getFeatures();
+    var vectorSource = new ol.source.Vector({
+      features: features,
+    });
+    var vectorLayer = new ol.layer.Vector({
+      source: vectorSource,
+    });
+    olMap.addLayer(vectorLayer);
+  }, [locations]);
 
   return (
     <>
-      <div ref={map} className="map"></div>
-      <div id="popup" >Hellooo world!</div>
-      <div style={{display: 'none'}}>
+      <div id="map" className="map"></div>
+      <div style={{ display: "none" }}>
         <div id="marker" title="Marker" onClick={props.showPopupFunc}></div>
       </div>
     </>
