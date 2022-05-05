@@ -18,12 +18,12 @@ function Home() {
   return (
     <div>
 
-      <div class="home">
+      <div className="home">
         <h1><br></br></h1>
       </div>
 
-      <div class="mapContainer">
-        <div class="map-react">
+      <div className="mapContainer">
+        <div className="map-react">
           <div id="mapTest"></div>
           <MyMap lat={46.38917665137211} lon={16.422676581675546} zoom={11} showPopupFunc={showPopup}/>
           
