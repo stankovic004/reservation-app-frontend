@@ -50,9 +50,9 @@ function Nav() {
             <Link style={navStyle} to="/register">
               <li>Register</li>
             </Link>
-            <Link style={navStyle} to="/admin">
+            {/* <Link style={navStyle} to="/admin">
               <li>Admin</li>
-            </Link>
+            </Link> */}
           </div>
         </ul>
       </div>

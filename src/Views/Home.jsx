@@ -16,6 +16,12 @@ function Home() {
     console.log(locationSelected);
   };
 
+  const btnSearch = {
+    display: "flex",
+    float: "right",
+    marginBottom: 5,
+  };
+
   return (
     <div>
       <div className="home">
@@ -26,7 +32,8 @@ function Home() {
 
       <div className="mapContainer">
         <div className="map-react">
-          <div id="mapTest"></div>
+          <button style={btnSearch}>Traži po terminu</button>
+
           <MyMap
             lat={46.38917665137211}
             lon={16.422676581675546}

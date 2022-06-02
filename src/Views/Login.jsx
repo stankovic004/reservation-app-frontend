@@ -3,8 +3,10 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./Login.css";
 import { UserLogin } from "../services/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,7 +16,15 @@ export default function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    UserLogin(email,password);
+    UserLogin(email, password).then((res) => {
+      if (res.success && res.role == "admin") {
+        navigate("/admin");
+      } else if (res.success) {
+        navigate("/");
+      } else {
+        alert("Pogrešno korisničko ime ili lozinka!");
+      }
+    });
   }
 
   return (
