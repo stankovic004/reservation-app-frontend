@@ -1,0 +1,26 @@
+.container {
+  width: 25%;
+  height: 300px;
+  margin: 10% 0 0 36%;
+  padding: 6px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+
+  font-size: large;
+
+  flex-direction: row;
+}
+
+.itemsContainer {
+  background-color: aliceblue;
+  border-radius: 10%;
+}
+
+.buttonConfirm {
+  width: fit-content;
+  margin: auto;
+  margin-top: 3vh;
+  padding: 5px;
+}

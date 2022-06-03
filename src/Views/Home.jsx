@@ -10,6 +10,8 @@ function Home() {
 
   const [locationSelected, setLocationSelected] = useState({});
 
+  const [username, setUsername] = useState("");
+
   let showPopup = () => {
     console.log("hello world");
     setPopupShown(true);
@@ -47,6 +49,7 @@ function Home() {
         <Popup
           setPopupShown={setPopupShown}
           locationSelected={locationSelected}
+          username={username}
         />
       )}
     </div>

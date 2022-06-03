@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { GetLocations } from "../services/locations";
+import { GetLocations } from "../services/backendCalls";
 // import {fromLonLat, toLonLat} from 'ol/proj';
 
 const ol = window.ol;

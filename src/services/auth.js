@@ -3,6 +3,10 @@ import axios from "axios";
 
 let loggedInUser = "";
 
+export function GetLoggedInUser() {
+  return loggedInUser;
+}
+
 export function RegisterUser(email, username, password) {
   try {
     axios
@@ -20,12 +24,30 @@ export function RegisterUser(email, username, password) {
   }
 }
 
+export function AddLocation(name, lon, lat) {
+  try {
+    axios
+      .post("http://localhost:8080/addLocation", { name, lon, lat })
+      .then((response) => {
+        alert("Lokacija dodana!");
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("Greška kod dodavanja lokacije!");
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export function UserLogin(email, password) {
   try {
     return axios
       .post("http://localhost:8080/login", { email, password })
       .then((response) => {
         console.log(response);
+        loggedInUser = response.data.username;
         return {
           success: true,
           username: response.data.username,

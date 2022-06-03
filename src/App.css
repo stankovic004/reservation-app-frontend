@@ -18,10 +18,24 @@ nav {
 }
 
 .nav-links {
-  width: 50%;
+  width: 80%;
   display: flex;
   justify-content: space-around;
   align-items: center;
   list-style: none;
+  text-decoration: none;
+}
+
+.navLogin {
+  display: flex;
+}
+
+.navItem {
+  padding: 10px;
+  font-size: 1.3rem;
+}
+
+a {
+  color: white;
   text-decoration: none;
 }

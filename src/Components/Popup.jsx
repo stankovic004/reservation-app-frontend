@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { GetLoggedInUser } from "../services/auth";
+import { useNavigate } from "react-router-dom";
+import { makeReservation } from "../services/backendCalls";
 
 function Popup(props) {
+  const navigate = useNavigate();
   const [schedules, setSchedules] = useState([]);
   const [isActive, setActive] = useState("false");
   const [schedulesTaken, setSchedulesTaken] = useState([]);
@@ -10,6 +14,7 @@ function Popup(props) {
 
   useEffect(() => {
     console.log(props.locationSelected);
+    console.log(props.username);
     let schedules = [];
     for (let i = 7; i < 23; i += 0.5) {
       schedules.push({
@@ -24,7 +29,6 @@ function Popup(props) {
 
   let handleClick = (hoursClicked, minutes, e) => {
     // whichClass.stopPropagation();
-    console.log("pressed " + hoursClicked + ":" + minutes);
     for (let i = 0; i < schedules.length; i++) {
       if (schedules[i].hours === hoursClicked && schedules[i].min === minutes) {
         schedules[i].isClicked = !schedules[i].isClicked;
@@ -36,20 +40,17 @@ function Popup(props) {
     for (let i = 0; i < schedules.length; i++) {
       if (schedules[i].isClicked) {
         schedulesTaken.push(schedules[i]);
-        console.log("hmm");
       }
     }
     setSchedulesTaken(schedulesTaken);
   };
 
   let closePopup = () => {
-    console.log("popup closed");
     props.setPopupShown(false);
   };
 
   //premeni klasname
   const handleToggle = () => {
-    console.log("handle toggle");
     setActive(!isActive);
   };
 
@@ -59,12 +60,33 @@ function Popup(props) {
 
   //datum se premenjo
   const onDateChange = (newDate) => {
-    console.log(newDate);
     setDate(newDate);
   };
 
   const handleSubmit = () => {
-    //Reservation(username, date, schedulesTaken, location);
+    let username = GetLoggedInUser();
+    if (username == "") {
+      alert("Niste logirani");
+      navigate("/login");
+      return;
+    }
+    let selectedDates = formatSelectedDates();
+    makeReservation(username, props.locationSelected.name, selectedDates);
+  };
+
+  const formatSelectedDates = () => {
+    let dates = [];
+    schedulesTaken.forEach((s) => {
+      let d = {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        day: date.getDate(),
+        hour: s.hours,
+        min: +s.min,
+      };
+      dates.push(d);
+    });
+    return dates;
   };
 
   return (
@@ -103,7 +125,7 @@ function Popup(props) {
           <div className="info">
             <br />
             <br />
-            <p>Rezervirao: *korisnicko ime* </p>
+            <p>Korisnik: {GetLoggedInUser()}</p>
             <p>Dvorana: {props.locationSelected.name} </p>
             <p>Datum: {date.toDateString()}</p>
             <p>
