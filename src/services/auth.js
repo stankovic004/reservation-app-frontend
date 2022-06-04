@@ -64,7 +64,7 @@ export function UserLogin(email, password) {
   }
 }
 
-export function Reservation(username, date, times, location) {
+export function MakeReservation(username, date, times, location) {
   try {
     axios
       .post("http://localhost:8080/reserve", {

@@ -11,10 +11,9 @@ function Popup(props) {
   const [isActive, setActive] = useState("false");
   const [schedulesTaken, setSchedulesTaken] = useState([]);
   const [date, setDate] = useState(new Date());
+  const [filteredRes, setFilteredRes] = useState(props.reservations);
 
-  useEffect(() => {
-    console.log(props.locationSelected);
-    console.log(props.username);
+  const initSchedules = () => {
     let schedules = [];
     for (let i = 7; i < 23; i += 0.5) {
       schedules.push({
@@ -24,13 +23,27 @@ function Popup(props) {
         isClicked: false,
       });
     }
-    setSchedules(schedules);
+    return schedules;
+  };
+  useEffect(() => {
+    setSchedules(initSchedules());
+
+    // uzmi samo rezervacije za odabranu dvoranu
+    let filteredByGym = props.reservations.filter(
+      (r) => r.location == props.locationSelected.name
+    );
+    setFilteredRes(filteredByGym);
+    let filtredByDay = filterByDate(filteredByGym, date);
   }, []);
 
   let handleClick = (hoursClicked, minutes, e) => {
     // whichClass.stopPropagation();
     for (let i = 0; i < schedules.length; i++) {
-      if (schedules[i].hours === hoursClicked && schedules[i].min === minutes) {
+      if (
+        schedules[i].hours === hoursClicked &&
+        schedules[i].min === minutes &&
+        schedules[i].reserved == false
+      ) {
         schedules[i].isClicked = !schedules[i].isClicked;
       }
     }
@@ -61,6 +74,34 @@ function Popup(props) {
   //datum se premenjo
   const onDateChange = (newDate) => {
     setDate(newDate);
+    let filtredByDay = filterByDate(filteredRes, newDate);
+  };
+
+  const filterByDate = (reservations, date) => {
+    let filtredByDay = reservations.filter((r) => {
+      let reservedDate = new Date(r.dates);
+      return (
+        reservedDate.getFullYear() == date.getFullYear() &&
+        reservedDate.getMonth() == date.getMonth() &&
+        reservedDate.getDate() == date.getDate()
+      );
+    });
+
+    let newSchedules = initSchedules();
+    filtredByDay.forEach((res) => {
+      for (let i = 0; i < newSchedules.length; i++) {
+        let resDate = new Date(res.dates);
+        console.log(newSchedules[i]);
+        if (
+          resDate.getUTCHours() == newSchedules[i].hours &&
+          resDate.getUTCMinutes() == +newSchedules[i].min
+        ) {
+          newSchedules[i].reserved = true;
+        }
+      }
+    });
+    setSchedules(newSchedules);
+    return filtredByDay;
   };
 
   const handleSubmit = () => {

@@ -9,7 +9,6 @@ function MyMap(props) {
   // const pos = window.ol.proj.fromLonLat([props.lon, props.lat]);
 
   function initMap() {
-    console.log("ovo je izvrseno");
     let map = new window.ol.Map({
       target: "map",
       layers: [
@@ -22,11 +21,15 @@ function MyMap(props) {
     });
     map.on("click", function (e) {
       map.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
-        console.log(feature);
+        console.log({
+          id: feature.values_.id,
+          name: feature.values_.name,
+        });
         props.setLocationSelected({
           id: feature.values_.id,
           name: feature.values_.name,
         });
+
         props.showPopupFunc();
       });
     });
@@ -58,7 +61,6 @@ function MyMap(props) {
       iconFeature.setStyle(iconStyle);
       features.push(iconFeature);
     }
-    console.log(features);
     return features;
   }
 

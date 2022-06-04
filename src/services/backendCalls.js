@@ -31,10 +31,28 @@ export function makeReservation(user, location, dates) {
       })
       .then((response) => {
         console.log("Bravo", response);
+        alert("Uspješno rezervirano!");
       })
       .catch((err) => {
         console.log(err);
         alert("Greška!");
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function GetReservationsFromAPI() {
+  try {
+    return axios
+      .get("http://localhost:8080/reservations")
+      .then((response) => {
+        let reservations = response.data;
+        return reservations;
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("ERROR!");
       });
   } catch (err) {
     console.log(err);
